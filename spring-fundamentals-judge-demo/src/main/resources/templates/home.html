@@ -25,58 +25,59 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                 <nav class="navbar navbar-expand-xl navbar-light bg-light rounded" >
-        <a class="navbar-brand" th:href="@{/home}">
-            <h1 class="tm-site-title mb-0">Judge v2</h1>
-        </a>
-        <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item" >
-                    <a class="nav-link" th:href="@{/users/profile}">
-                        <span class="sr-only">Hello, <span th:text="${username}"></span></span>
+                <nav class="navbar navbar-expand-xl navbar-light bg-light rounded">
+                    <a class="navbar-brand" th:href="@{/home}">
+                        <h1 class="tm-site-title mb-0">Judge v2</h1>
                     </a>
-                </li>
-                
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" th:href="@{/admin}" id="navbarDropdown"
-                           role="button" data-toggle="dropdown" aria-haspopup="true"
-                           aria-expanded="false">
-                            Admin
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" th:href="@{/add-exercise}">Add Exercise</a>
-                            <a class="dropdown-item" th:href="@{/add-role}">Add Role</a>
+                    <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                        </div>
-                    </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/check-homework}">Check Homework</a>
-                </li>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/users/profile/__${#session.getAttribute('id')}__}">
+                        <span th:if="${#session.getAttribute('username') != null}">Hello,
+                            <span th:text="${#session.getAttribute('username')}"></span></span>
+                                </a>
+                            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/add-homework}">Add Homework</a>
-                </li>
-				<li class="nav-item">
-                    <a class="nav-link" th:href="@{/users/profile}">Profile</a>
-                </li>
-            
-            </ul>
-            <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a th:if="${#session.getAttribute('role') == 'ADMIN_ROLE'}" th:href="@{/admin}"
+                                   class="nav-link dropdown-toggle" id="navbarDropdown"
+                                   role="button" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
+                                    Admin
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" th:href="@{/exercises/add}">Add Exercise</a>
+                                    <a class="dropdown-item" th:href="@{/roles/add}">Add Role</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/homework/check}">Check Homework</a>
+                            </li>
 
-                <li class="nav-item">
-                    <a class="nav-link d-flex" th:href="@{/users/logout}">
-                        <span>Logout</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/homework/add}">Add Homework</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/users/profile/__${#session.getAttribute('id')}__}">Profile</a>
+                            </li>
+
+                        </ul>
+                        <ul class="navbar-nav">
+
+                            <li class="nav-item">
+                                <a class="nav-link d-flex" th:href="@{/users/logout}">
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
             </div>
         </div>
         <!-- row -->
@@ -98,8 +99,6 @@
                     <div id="googleGauge" style="width: 100%; height: 100%;"></div>
                 </div>
             </div>
-
-
             <div class="tm-col tm-col-big">
                 <div class="bg-white tm-block h-100">
                     <div class="row">
@@ -107,15 +106,11 @@
                             <h2 class="tm-block-title d-inline-block">Top Scored Students</h2>
                         </div>
                         <div class="col-4 text-right">
-                            <a  class="tm-link-black">View All</a>
+                            <a class="tm-link-black">View All</a>
                         </div>
                     </div>
                     <ol class="tm-list-group tm-list-group-alternate-color tm-list-group-pad-big">
-                        
-                            <li class="tm-list-group-item" >Top student one</li>
-							<li class="tm-list-group-item" >Top student two</li>
-							<li class="tm-list-group-item" >Top student three</li>
-                        
+                        <li th:each="u : ${users}" th:text="${u}" class="tm-list-group-item">Top student one</li>
                     </ol>
                 </div>
             </div>
@@ -127,12 +122,9 @@
             <div class="tm-col tm-col-small">
                 <div class="bg-white tm-block h-100">
                     <h2 class="tm-block-title">Active Exercises</h2>
-                    <ol class="tm-list-group">
-                        
-                            <li class="tm-list-group-item">Active exercise one</li>
-							 <li class="tm-list-group-item">Active exercise two</li>
-							  <li class="tm-list-group-item">Active exercise three</li>
-                      
+                    <ol    class="tm-list-group">
+                        <li th:each="ex: ${exercises}" th:text="${ex}"
+                            class="tm-list-group-item">Active exercise one</li>
                     </ol>
                 </div>
             </div>
@@ -156,7 +148,7 @@
 
     // Draw the chart and set the chart values
     function drawChart() {
-		//ToDo all grades count
+        //ToDo all grades count
         let six = 1;
         let five = 2;
         let four = 4;
@@ -217,7 +209,7 @@
     google.charts.setOnLoadCallback(drawGauge);
 
     function drawGauge() {
-		//ToDo total count of register users
+        //ToDo total count of register users
         let totalStudents = 20;
         let dataGauge = google.visualization.arrayToDataTable([
             ['Label', 'Value'],

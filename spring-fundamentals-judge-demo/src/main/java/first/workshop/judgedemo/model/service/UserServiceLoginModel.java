@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 public class UserServiceLoginModel {
-
+    private String id;
     private String username;
     private String password;
+    private String roleName;
 }

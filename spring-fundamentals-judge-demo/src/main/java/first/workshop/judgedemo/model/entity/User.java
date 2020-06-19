@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -37,4 +38,8 @@ public class User extends BaseEntity{
     @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
     @JoinColumn(name="role_id", referencedColumnName = "id")
     private Role role;
+
+    //not required, keeps user's comments
+    @OneToMany(mappedBy = "author")
+    private Collection<Comment> comments;
 }

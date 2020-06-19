@@ -24,7 +24,7 @@ public class Comment extends BaseEntity{
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private User author;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Homework.class)
     @JoinColumn(name = "homework_id", referencedColumnName = "id")
     private Homework homework;
 }

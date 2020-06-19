@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -31,12 +32,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getRole(String role) {
-        return roleRepository
+    public Optional<Role> getRole(String role) {
+        return Optional.of(roleRepository
                 .findAll()
                 .stream()
                 .filter(r -> r.getName().toString().toLowerCase().contains(role.toLowerCase()))
                 .findFirst()
-                .orElse(new Role(RoleEnum.ANONYMOUS_ROLE));
+                .orElse(new Role(RoleEnum.ANONYMOUS_ROLE)));
     }
 }

@@ -1,6 +1,7 @@
 package first.workshop.judgedemo.model.entity;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Exercise extends BaseEntity {
     @Column
-    @Min(value = 2, message = "username length must be minimum two characters!")
+    @Length(min = 2, message = "username length must be minimum two characters!")
     @NotNull
     @NonNull
     private String name;
